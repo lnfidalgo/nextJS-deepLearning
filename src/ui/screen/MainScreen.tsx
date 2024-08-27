@@ -1,13 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function MainScreen() {
+  const router = useRouter();
   return (
     <div className="w-full bg-red-100">
       <h1>Home</h1>
-      <Link href={"/carrinho#testeID"}>
-        <Button>Teste ID</Button>
-      </Link>
+      <Button onClick={() => router.push("/carrinho#testeID")}>Teste ID</Button>
     </div>
   );
 }

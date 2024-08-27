@@ -1,9 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Carrinho() {
   const searchParams = useSearchParams();
+  const [showFallback, setShowFallback] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFallback(true);
+    }, 6000);
+    return () => clearTimeout(timer);
+  }, []);
 
   function updateSorting(sortOrder: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -13,12 +22,6 @@ export default function Carrinho() {
 
   const pathname = usePathname();
 
-  function switchLocale(locale: string) {
-    // e.g. '/en/about' or '/fr/contact'
-    const newPath = `/${locale}${pathname}`;
-    window.history.replaceState(null, "", newPath);
-  }
-
   return (
     <div>
       <div className="h-[900px]">
@@ -27,10 +30,6 @@ export default function Carrinho() {
       <div className="h-[900px]">
         <Button onClick={() => updateSorting("asc")}>Sort Ascending</Button>
         <Button onClick={() => updateSorting("desc")}>Sort Descending</Button>
-      </div>
-      <div className="h-[900px]">
-        <Button onClick={() => switchLocale("en")}>English</Button>
-        <Button onClick={() => switchLocale("fr")}>French</Button>
       </div>
       <div className="h-[900px]">
         <h2 id="testeID">Teste de rota com ID</h2>
